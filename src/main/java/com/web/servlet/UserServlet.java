@@ -38,8 +38,70 @@ public class UserServlet extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+		request.setCharacterEncoding("UTF-8");
+		String uri = request.getRequestURI();
+		int idx = uri.lastIndexOf("/");
+		String cmd = uri.substring(idx+1);
+		String uiNumStr = request.getParameter("uiNum");
+		int uiNum=0;
+		if(uiNumStr!=null) {
+			uiNum=Integer.parseInt(uiNumStr);
+		}
+		String uiId = request.getParameter("uiId");
+		String uiPwd = request.getParameter("uiPwd");
+		String uiName = request.getParameter("uiName");
+		String uiAge = request.getParameter("uiAge");
+		String uiPhone = request.getParameter("uiPhone");
+		String uiAddress = request.getParameter("uiAddress");
+		String uiTrans = request.getParameter("uiTrans");
+		UserDTO user = new UserDTO();
+		user.setUiNum(uiNum);
+		user.setUiId(uiId);
+		user.setUiPwd(uiPwd);
+		user.setUiName(uiName);
+		if(uiAge!=null) {
+			user.setUiAge(Integer.parseInt(uiAge));
+		}
+		user.setUiPhone(uiPhone);
+		user.setUiAddress(uiAddress);
+		user.setUiTrans(uiTrans);
+		
+		if("insert".equals(cmd)) {
+			int result = userService.insertUser(user);
+			String msg = "입력이 실패하였습니다.";
+			if(result==1) {
+				msg = "입력이 성공하였습니다.";
+			}
+			String url =  "/user/user-list";
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+			RequestDispatcher rd = request.getRequestDispatcher("/views/common/msg");
+			rd.forward(request,response);
+			
+		}else if("update".equals(cmd)) {
+			int result = userService.updateUser(user);
+			String msg = "실패하였습니다.";
+			if(result==1) {
+				msg = "성공하였습니다.";
+			}
+			String url = "/user/user-view?uiNum="+uiNum;
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+			RequestDispatcher rd = request.getRequestDispatcher("/views/common/msg");
+			rd.forward(request, response);
+			
+		}else if("update".equals(cmd)) {
+			int result = userService.deleteUser(uiNum);
+			String msg = "실패하였습니다.";
+			if(result==1) {
+				msg="성공하였습니다.";
+			}
+			String url = "/user/user-list";
+			request.setAttribute("msg", msg);
+			request.setAttribute("url", url);
+			RequestDispatcher rd = request.getRequestDispatcher("/views/common/msg");
+			rd.forward(request, response);
+		}
 	}
 
 }

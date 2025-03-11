@@ -22,4 +22,22 @@
   <servlet-name>userServlet</servlet-name>
   <url-pattern>/user/*</url-pattern>
   </servlet-mapping>
+  
+    <servlet>
+  <servlet-name>foodServlet</servlet-name>
+  <servlet-class>com.web.servlet.FoodServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>foodServlet</servlet-name>
+  <url-pattern>/food/*</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  <servlet-name>testServlet</servlet-name>
+  <servlet-class>com.web.servlet.TestServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  <servlet-name>testServlet</servlet-name>
+  <url-pattern>/test/*</url-pattern>
+  </servlet-mapping>
 </web-app>
