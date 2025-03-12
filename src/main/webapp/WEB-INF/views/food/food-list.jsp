@@ -2,6 +2,7 @@
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,6 +11,7 @@
 </head>
 <body>
 <a href="/views/food/food-insert">메뉴등록</a>
+${empty tests}
 <table border="1">
 	<tr>
 		<th>번호</th>
@@ -17,19 +19,14 @@
 		<th>가격</th>
 	</tr>
 
-
-<%
-List<FoodDTO> foods = (List<FoodDTO>)request.getAttribute("foods");
-for(FoodDTO food:foods){
-%>
+<c:forEach items="${foods}" var="food">
 	<tr>
-	<td><%=food.getFiNum() %></td>
-	<td><a href="/food/food-view?fiNum=<%=food.getFiNum()%>"><%=food.getFiName() %></a></td>
-	<td><%=food.getFiPrice() %></td>
-	
-	</tr>
-	
-	<%} %>
+	<td>${food.fiNum}</td>
+	<td><a href="/food/food-view?fiNum=${food.fiNum}">${food.fiName}</a></td>
+	<td>${food.fiPrice}</td>
+
+</c:forEach>
+
 </table>
 </body>
 </html>
